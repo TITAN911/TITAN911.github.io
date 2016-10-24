@@ -1,1 +1,286 @@
-hello
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Title</title>
+    <style type="text/css">
+        td{
+            background-color: white;
+        }
+        #pid{
+            position: absolute;
+            left:600px;
+            top:50px;
+        }
+    </style>
+    <script type="text/javascript">
+        //bean
+        var direction=39;
+        var bx=parseInt(Math.random()*10+1);
+        var by=parseInt(Math.random()*10+1);
+        var length=0;
+        var runFlag=true;
+
+        var snake=new Array();
+        function init(){
+            document.getElementById(bx+"-"+by).style.backgroundColor="gray";
+            var sx=parseInt(Math.random()*10+1);
+            var sy=parseInt(Math.random()*10+1);
+            snake[0]=sx+"-"+sy;
+            document.getElementById(snake[0]).style.backgroundColor="red";
+            length=1;
+        }
+        function move(){
+            var aa=event.keyCode;
+            if(aa-direction!=2&&direction-aa!=2&&direction!=aa){
+                direction=aa;
+                run();
+            }
+            //left 37  top 38  right 39 bottom 40
+//            run();
+
+        }
+//        function eat()
+        function run(){
+            if(runFlag){
+                var p=snake[0].split("-");
+                switch(direction){
+                    case 37:
+                        if(p[1]!=1)
+                        {
+                            p[1]-=1;
+                        }else{
+                            die();
+                        }
+                        direction=37;
+                        break;
+                    case 38:
+                        if(p[0]!=1){
+                            p[0]-=1;
+                        }else{
+                            die();
+                        }
+                        direction=38;
+                        break;
+                    case 39:
+                        if(p[1]!=10){
+                            p[1]=parseInt(p[1])+1;
+                        }else{
+                            die();
+                        }
+                        direction=39;
+                        break;
+                    case 40:
+                        if(p[0]!=10){
+                            p[0]=parseInt(p[0])+1;
+                        }else{
+                            die();
+                        }
+                        direction=40;
+                        break;
+                }
+//            document.getElementById(snake[length-1]).style.backgroundColor="white";
+
+                //snake[0]=p[0]+"-"+p[1];
+
+                 eat(p[0]+"-"+p[1]);
+                if(runFlag){
+                    repaint();
+                }
+            }
+
+        }
+        function die(){
+            runFlag=false;
+            document.getElementById("pid").innerHTML="GAME OVER";
+        }
+        function repaint(){
+            var tds=document.getElementsByTagName("td");
+            for(var i=0;i<tds.length;i++){
+                tds[i].style.backgroundColor="white";
+            }
+            for(var x=0;x<length;x++){
+                document.getElementById(snake[x]).style.backgroundColor="red";
+
+            }
+            document.getElementById(bx+"-"+by).style.backgroundColor="gray";
+
+        }
+        function eat(xy){
+            var flag=0;
+            var bflag=true;
+            if(bx+"-"+by==xy){
+                while(bflag){
+                    bx=parseInt(Math.random()*10+1);
+                    by=parseInt(Math.random()*10+1);
+                    for(var i=0;i<length;i++){
+                        if(snake[i]==bx+"-"+by){
+                            bflag=false;
+                            break;
+                        }
+                    }
+                    if(!bflag){
+                        bflag=true;
+                    }else{
+                        bflag=false;
+                    }
+                }
+                flag=1;
+            }
+
+            length+=flag;
+            for(var i=length-1;i>=0;i--){
+                snake[i+1]=snake[i];
+            }
+            snake[0]=xy;
+            zhuang();
+        }
+        function zhuang(){
+            var zFlag=false;
+            for(var i=0;i<length-1;i++){
+                for(var j=i+1;j<length;j++){
+                    if(snake[i]==snake[j]){
+                        zFlag=true;
+                    }
+                }
+            }
+            if(zFlag==true){
+                for(var i=0;i<length;i++){
+                    document.getElementById("h2id").innerHTML+=snake[i]+" ";
+                }
+                alert("zhuang");
+                die();
+            }
+        }
+        setInterval("run()",1000);
+    </script>
+</head>
+<body onload="init()" onkeydown="move()">
+<table cellpadding="5" cellspacing="2" border="1" height="200" align="center"  width="200" rules="none">
+    <tr>
+        <td id="1-1">&nbsp</td>
+        <td id="1-2">&nbsp</td>
+        <td id="1-3">&nbsp</td>
+        <td id="1-4">&nbsp</td>
+        <td id="1-5">&nbsp</td>
+        <td id="1-6">&nbsp</td>
+        <td id="1-7">&nbsp</td>
+        <td id="1-8">&nbsp</td>
+        <td id="1-9">&nbsp</td>
+        <td id="1-10">&nbsp</td>
+    </tr>
+    <tr>
+        <td id="2-1">&nbsp</td>
+        <td id="2-2">&nbsp</td>
+        <td id="2-3">&nbsp</td>
+        <td id="2-4">&nbsp</td>
+        <td id="2-5">&nbsp</td>
+        <td id="2-6">&nbsp</td>
+        <td id="2-7">&nbsp</td>
+        <td id="2-8">&nbsp</td>
+        <td id="2-9">&nbsp</td>
+        <td id="2-10">&nbsp</td>
+    </tr>
+    <tr>
+        <td id="3-1">&nbsp</td>
+        <td id="3-2">&nbsp</td>
+        <td id="3-3">&nbsp</td>
+        <td id="3-4">&nbsp</td>
+        <td id="3-5">&nbsp</td>
+        <td id="3-6">&nbsp</td>
+        <td id="3-7">&nbsp</td>
+        <td id="3-8">&nbsp</td>
+        <td id="3-9">&nbsp</td>
+        <td id="3-10">&nbsp</td>
+    </tr>
+    <tr>
+        <td id="4-1">&nbsp</td>
+        <td id="4-2">&nbsp</td>
+        <td id="4-3">&nbsp</td>
+        <td id="4-4">&nbsp</td>
+        <td id="4-5">&nbsp</td>
+        <td id="4-6">&nbsp</td>
+        <td id="4-7">&nbsp</td>
+        <td id="4-8">&nbsp</td>
+        <td id="4-9">&nbsp</td>
+        <td id="4-10">&nbsp</td>
+    </tr>
+    <tr>
+        <td id="5-1">&nbsp</td>
+        <td id="5-2">&nbsp</td>
+        <td id="5-3">&nbsp</td>
+        <td id="5-4">&nbsp</td>
+        <td id="5-5">&nbsp</td>
+        <td id="5-6">&nbsp</td>
+        <td id="5-7">&nbsp</td>
+        <td id="5-8">&nbsp</td>
+        <td id="5-9">&nbsp</td>
+        <td id="5-10">&nbsp</td>
+    </tr>
+    <tr>
+        <td id="6-1">&nbsp</td>
+        <td id="6-2">&nbsp</td>
+        <td id="6-3">&nbsp</td>
+        <td id="6-4">&nbsp</td>
+        <td id="6-5">&nbsp</td>
+        <td id="6-6">&nbsp</td>
+        <td id="6-7">&nbsp</td>
+        <td id="6-8">&nbsp</td>
+        <td id="6-9">&nbsp</td>
+        <td id="6-10">&nbsp</td>
+    </tr>
+    <tr>
+        <td id="7-1">&nbsp</td>
+        <td id="7-2">&nbsp</td>
+        <td id="7-3">&nbsp</td>
+        <td id="7-4">&nbsp</td>
+        <td id="7-5">&nbsp</td>
+        <td id="7-6">&nbsp</td>
+        <td id="7-7">&nbsp</td>
+        <td id="7-8">&nbsp</td>
+        <td id="7-9">&nbsp</td>
+        <td id="7-10">&nbsp</td>
+    </tr>
+    <tr>
+        <td id="8-1">&nbsp</td>
+        <td id="8-2">&nbsp</td>
+        <td id="8-3">&nbsp</td>
+        <td id="8-4">&nbsp</td>
+        <td id="8-5">&nbsp</td>
+        <td id="8-6">&nbsp</td>
+        <td id="8-7">&nbsp</td>
+        <td id="8-8">&nbsp</td>
+        <td id="8-9">&nbsp</td>
+        <td id="8-10">&nbsp</td>
+    </tr>
+    <tr>
+        <td id="9-1">&nbsp</td>
+        <td id="9-2">&nbsp</td>
+        <td id="9-3">&nbsp</td>
+        <td id="9-4">&nbsp</td>
+        <td id="9-5">&nbsp</td>
+        <td id="9-6">&nbsp</td>
+        <td id="9-7">&nbsp</td>
+        <td id="9-8">&nbsp</td>
+        <td id="9-9">&nbsp</td>
+        <td id="9-10">&nbsp</td>
+    </tr>
+    <tr>
+        <td id="10-1">&nbsp</td>
+        <td id="10-2">&nbsp</td>
+        <td id="10-3">&nbsp</td>
+        <td id="10-4">&nbsp</td>
+        <td id="10-5">&nbsp</td>
+        <td id="10-6">&nbsp</td>
+        <td id="10-7">&nbsp</td>
+        <td id="10-8">&nbsp</td>
+        <td id="10-9">&nbsp</td>
+        <td id="10-10">&nbsp</td>
+    </tr>
+
+</table>
+<h1 id="pid"></h1>
+<h2 id="h2id"></h2>
+
+</body>
+</html>
