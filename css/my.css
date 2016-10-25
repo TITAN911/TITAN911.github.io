@@ -1,0 +1,42 @@
+body{
+    background-image: url(../image/bg2.jpg);
+}
+#xz{
+    position: absolute;
+    left: 750px;
+    top: 5px;
+    /*margin:50px 25px;*/
+    width: 550px;
+    height: 800px;
+    background-image: url("../image/xz1.jpg");
+    background-size:100% 100%;
+}
+#iframe{
+    position: absolute;
+    left: 10px;
+    top: 750px;
+}
+#pid{
+    /*border: groove 1px;*/
+    width: 400px;
+    height:500px;
+    position: relative;
+    left: 80px;
+    top: 170px;
+    font-family: 'Rancho', serif;
+    color: #a34baa;
+    font-size: 18px;
+    /*font-weight:bold;*/
+    line-height:30px;
+    text-shadow: 4px 4px 4px #aaa;
+    /*color: #fafafa;*/
+    /*letter-spacing: 0;*/
+    /*text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135 */
+}
+/*#loveHeart{*/
+    /*width:800px;*/
+    /*height:auto;*/
+    /*position: absolute;*/
+    /*left:800px;*/
+    /*top:500px;*/
+/*}*/

@@ -1,286 +1,96 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Title</title>
-    <style type="text/css">
-        td{
-            background-color: white;
-        }
-        #pid{
-            position: absolute;
-            left:600px;
-            top:50px;
-        }
-    </style>
-    <script type="text/javascript">
-        //bean
-        var direction=39;
-        var bx=parseInt(Math.random()*10+1);
-        var by=parseInt(Math.random()*10+1);
-        var length=0;
-        var runFlag=true;
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/l-by-l.min.js"></script>
+    <link rel="stylesheet" href="css/my.css" type="text/css">
+    <link rel="stylesheet" href="css/default.css" type="text/css">
+    <script type="text/javascript" src="js/garden_dev.js"></script>
+    <script type="text/javascript" src="js/functions_dev.js"></script>
+    <script>
+        jQuery(document).ready(function($){
 
-        var snake=new Array();
-        function init(){
-            document.getElementById(bx+"-"+by).style.backgroundColor="gray";
-            var sx=parseInt(Math.random()*10+1);
-            var sy=parseInt(Math.random()*10+1);
-            snake[0]=sx+"-"+sy;
-            document.getElementById(snake[0]).style.backgroundColor="red";
-            length=1;
-        }
-        function move(){
-            var aa=event.keyCode;
-            if(aa-direction!=2&&direction-aa!=2&&direction!=aa){
-                direction=aa;
-                run();
-            }
-            //left 37  top 38  right 39 bottom 40
-//            run();
+            $("#pid").lbyl({
+                content: "Dear 傻钊钊： 朦胧的月色正浓，星光与静夜默言无声，一个人的夜，一个人的惆怅心思。隐约着怎样面对一份不确定的爱感情的抉择，" +
+                "陷入爱里的不能自拔的人，没有了智商，低的可怜，痴痴的，一个人一旦遇上且喜欢的人，就会痴心，傻傻的，乱了方寸，无所适从，做什么都手足无措。" +
+                "爱上你，总是盼望你出现，一旦有你的身影，却又胆怯不敢打扰，所以越是想接近，却想逃离，越是想逃离，越想接近，转身背过脸去，却越清晰的看见，" +
+                "你的影子，从各个角度，从镜子反射过来你的身影，一个人活在一个人的影子里。如果，时间可以证明一切，是不是如我想象的你，是不是爱着我，给我勇气，" +
+                "告诉我，让我有信心不再闪躲，好敢于面对你，和你在一起，默默的相伴，默默的欢喜。红尘陌上，花开几许，你可以选择爱或不爱我，而我只能选择爱或更爱你！",
+                speed: 135,
+                type: 'fade',
+//                finished: function(){
+//                    $('.word2').lbyl({
+//                        content:"生命的开始到结束就是一个由绽放到凋谢的花季，而心态却永如盛开摇曳的花朵般娇艳，只要心花不败，爱情的花自开，暗香飘来。一颗年轻的心是本色的心，不论成，不论败，顺境与逆境，晴朗时，碧心一片望朗月当空，淡雅观云水沸腾，有策马扬鞭的勇气，登高怀远的志向，阴霾时，请记得水穿会石开，避开那寒风，一物见佛，听水寂静，关云霁而忘我，前念后念，是否该随缘，爱抚被歧视的伤痛，温润浸透泪水的心灵。生命短短数十年，不论成败，百年后都成过眼烟云，让内心宽远，就不会坠入痛苦的深渊，在人生的任何阶段，如履平地，总会安然的度过。",
+//                        speed: 150,
+//                        type: 'fade',
+//                        fadeSpeed: 500
+//                    })
+//                } // Finished Callback
+            });
 
-        }
-//        function eat()
-        function run(){
-            if(runFlag){
-                var p=snake[0].split("-");
-                switch(direction){
-                    case 37:
-                        if(p[1]!=1)
-                        {
-                            p[1]-=1;
-                        }else{
-                            die();
-                        }
-                        direction=37;
-                        break;
-                    case 38:
-                        if(p[0]!=1){
-                            p[0]-=1;
-                        }else{
-                            die();
-                        }
-                        direction=38;
-                        break;
-                    case 39:
-                        if(p[1]!=10){
-                            p[1]=parseInt(p[1])+1;
-                        }else{
-                            die();
-                        }
-                        direction=39;
-                        break;
-                    case 40:
-                        if(p[0]!=10){
-                            p[0]=parseInt(p[0])+1;
-                        }else{
-                            die();
-                        }
-                        direction=40;
-                        break;
-                }
-//            document.getElementById(snake[length-1]).style.backgroundColor="white";
-
-                //snake[0]=p[0]+"-"+p[1];
-
-                 eat(p[0]+"-"+p[1]);
-                if(runFlag){
-                    repaint();
-                }
-            }
-
-        }
-        function die(){
-            runFlag=false;
-            document.getElementById("pid").innerHTML="GAME OVER";
-        }
-        function repaint(){
-            var tds=document.getElementsByTagName("td");
-            for(var i=0;i<tds.length;i++){
-                tds[i].style.backgroundColor="white";
-            }
-            for(var x=0;x<length;x++){
-                document.getElementById(snake[x]).style.backgroundColor="red";
-
-            }
-            document.getElementById(bx+"-"+by).style.backgroundColor="gray";
-
-        }
-        function eat(xy){
-            var flag=0;
-            var bflag=true;
-            if(bx+"-"+by==xy){
-                while(bflag){
-                    bx=parseInt(Math.random()*10+1);
-                    by=parseInt(Math.random()*10+1);
-                    for(var i=0;i<length;i++){
-                        if(snake[i]==bx+"-"+by){
-                            bflag=false;
-                            break;
-                        }
-                    }
-                    if(!bflag){
-                        bflag=true;
-                    }else{
-                        bflag=false;
-                    }
-                }
-                flag=1;
-            }
-
-            length+=flag;
-            for(var i=length-1;i>=0;i--){
-                snake[i+1]=snake[i];
-            }
-            snake[0]=xy;
-            zhuang();
-        }
-        function zhuang(){
-            var zFlag=false;
-            for(var i=0;i<length-1;i++){
-                for(var j=i+1;j<length;j++){
-                    if(snake[i]==snake[j]){
-                        zFlag=true;
-                    }
-                }
-            }
-            if(zFlag==true){
-                for(var i=0;i<length;i++){
-                    document.getElementById("h2id").innerHTML+=snake[i]+" ";
-                }
-                alert("zhuang");
-                die();
-            }
-        }
-        setInterval("run()",1000);
+        });
     </script>
 </head>
-<body onload="init()" onkeydown="move()">
-<table cellpadding="5" cellspacing="2" border="1" height="200" align="center"  width="200" rules="none">
-    <tr>
-        <td id="1-1">&nbsp</td>
-        <td id="1-2">&nbsp</td>
-        <td id="1-3">&nbsp</td>
-        <td id="1-4">&nbsp</td>
-        <td id="1-5">&nbsp</td>
-        <td id="1-6">&nbsp</td>
-        <td id="1-7">&nbsp</td>
-        <td id="1-8">&nbsp</td>
-        <td id="1-9">&nbsp</td>
-        <td id="1-10">&nbsp</td>
-    </tr>
-    <tr>
-        <td id="2-1">&nbsp</td>
-        <td id="2-2">&nbsp</td>
-        <td id="2-3">&nbsp</td>
-        <td id="2-4">&nbsp</td>
-        <td id="2-5">&nbsp</td>
-        <td id="2-6">&nbsp</td>
-        <td id="2-7">&nbsp</td>
-        <td id="2-8">&nbsp</td>
-        <td id="2-9">&nbsp</td>
-        <td id="2-10">&nbsp</td>
-    </tr>
-    <tr>
-        <td id="3-1">&nbsp</td>
-        <td id="3-2">&nbsp</td>
-        <td id="3-3">&nbsp</td>
-        <td id="3-4">&nbsp</td>
-        <td id="3-5">&nbsp</td>
-        <td id="3-6">&nbsp</td>
-        <td id="3-7">&nbsp</td>
-        <td id="3-8">&nbsp</td>
-        <td id="3-9">&nbsp</td>
-        <td id="3-10">&nbsp</td>
-    </tr>
-    <tr>
-        <td id="4-1">&nbsp</td>
-        <td id="4-2">&nbsp</td>
-        <td id="4-3">&nbsp</td>
-        <td id="4-4">&nbsp</td>
-        <td id="4-5">&nbsp</td>
-        <td id="4-6">&nbsp</td>
-        <td id="4-7">&nbsp</td>
-        <td id="4-8">&nbsp</td>
-        <td id="4-9">&nbsp</td>
-        <td id="4-10">&nbsp</td>
-    </tr>
-    <tr>
-        <td id="5-1">&nbsp</td>
-        <td id="5-2">&nbsp</td>
-        <td id="5-3">&nbsp</td>
-        <td id="5-4">&nbsp</td>
-        <td id="5-5">&nbsp</td>
-        <td id="5-6">&nbsp</td>
-        <td id="5-7">&nbsp</td>
-        <td id="5-8">&nbsp</td>
-        <td id="5-9">&nbsp</td>
-        <td id="5-10">&nbsp</td>
-    </tr>
-    <tr>
-        <td id="6-1">&nbsp</td>
-        <td id="6-2">&nbsp</td>
-        <td id="6-3">&nbsp</td>
-        <td id="6-4">&nbsp</td>
-        <td id="6-5">&nbsp</td>
-        <td id="6-6">&nbsp</td>
-        <td id="6-7">&nbsp</td>
-        <td id="6-8">&nbsp</td>
-        <td id="6-9">&nbsp</td>
-        <td id="6-10">&nbsp</td>
-    </tr>
-    <tr>
-        <td id="7-1">&nbsp</td>
-        <td id="7-2">&nbsp</td>
-        <td id="7-3">&nbsp</td>
-        <td id="7-4">&nbsp</td>
-        <td id="7-5">&nbsp</td>
-        <td id="7-6">&nbsp</td>
-        <td id="7-7">&nbsp</td>
-        <td id="7-8">&nbsp</td>
-        <td id="7-9">&nbsp</td>
-        <td id="7-10">&nbsp</td>
-    </tr>
-    <tr>
-        <td id="8-1">&nbsp</td>
-        <td id="8-2">&nbsp</td>
-        <td id="8-3">&nbsp</td>
-        <td id="8-4">&nbsp</td>
-        <td id="8-5">&nbsp</td>
-        <td id="8-6">&nbsp</td>
-        <td id="8-7">&nbsp</td>
-        <td id="8-8">&nbsp</td>
-        <td id="8-9">&nbsp</td>
-        <td id="8-10">&nbsp</td>
-    </tr>
-    <tr>
-        <td id="9-1">&nbsp</td>
-        <td id="9-2">&nbsp</td>
-        <td id="9-3">&nbsp</td>
-        <td id="9-4">&nbsp</td>
-        <td id="9-5">&nbsp</td>
-        <td id="9-6">&nbsp</td>
-        <td id="9-7">&nbsp</td>
-        <td id="9-8">&nbsp</td>
-        <td id="9-9">&nbsp</td>
-        <td id="9-10">&nbsp</td>
-    </tr>
-    <tr>
-        <td id="10-1">&nbsp</td>
-        <td id="10-2">&nbsp</td>
-        <td id="10-3">&nbsp</td>
-        <td id="10-4">&nbsp</td>
-        <td id="10-5">&nbsp</td>
-        <td id="10-6">&nbsp</td>
-        <td id="10-7">&nbsp</td>
-        <td id="10-8">&nbsp</td>
-        <td id="10-9">&nbsp</td>
-        <td id="10-10">&nbsp</td>
-    </tr>
+<body>
+    <iframe id="iframe" frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="http://music.163.com/outchain/player?type=2&id=34916642&auto=1&height=32"></iframe>
+    <div id="xz">
+        <p id="pid">
+         </p>
+    </div>
+    <div id="loveHeart">
+        <canvas id="garden"></canvas>
+        <div id="words">
+            <div id="messages">
+                My baby, I have fallen in love with you
+                <div id="elapseClock"></div>
+            </div>
+            <div id="loveu">
+                Love u forever and ever.<br/>
+                <div class="signature">- Lucifer</div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var offsetX = $("#loveHeart").width() / 2;
+        var offsetY = $("#loveHeart").height() / 2 - 55;
+        var displayMode = 1;
+        var together = new Date();
+        together.setFullYear(2015, 9, 1);
+        together.setHours(20);
+        together.setMinutes(0);
+        together.setSeconds(0);
+        together.setMilliseconds(0);
 
-</table>
-<h1 id="pid"></h1>
-<h2 id="h2id"></h2>
+        $("#loveHeart").click(function(){
+            displayMode *= -1;
+            timeElapse(together, displayMode);
+        });
 
+        if (!document.createElement('canvas').getContext) {
+            var msg = document.createElement("div");
+            msg.id = "errorMsg";
+            msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+";
+            document.body.appendChild(msg);
+            $("#code").css("display", "none")
+            $("#copyright").css("position", "absolute");
+            $("#copyright").css("bottom", "10px");
+            document.execCommand("stop");
+        } else {
+            setTimeout(function () {
+                adjustWordsPosition();
+                startHeartAnimation();
+            }, 5000);
+
+            timeElapse(together, displayMode);
+            setInterval(function () {
+                timeElapse(together, displayMode);
+            }, 500);
+
+            adjustCodePosition();
+            $("#code").typewriter();
+        }
+    </script>
 </body>
 </html>
